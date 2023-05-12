@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Boykayı bul!</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+                text-align: center;
+            }
+            input {
+                margin-top: 20px;
+                padding: 10px;
+                font-size: 16px;
+                width: 300px;
+            }
+            button {
+                margin-top: 10px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            img {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Boykayı Bul</h1>
+        <p>
+            Enistein'in(Mentalistler) köpeği kayıp. Ondan bir süredir haber alamıyoruz. 
+            En son Enistein ile pentagonu hacklemeye çalıştığına dair bir bilgimiz var. 
+            En son görüldüğü anda bu fotoğraf çekildi. Onu bul!
+        </p>
+        <img src="boyka2.jpg" alt="Enistein'in köpeği">
+        <input type="text" id="secretKey" placeholder="Son Görüldüğü İl İlçe">
+        <button onclick="decryptMessage()">Şifreyi Çöz</button>
+        <p>
+            Talimatlar<br>
+            1. İl ilçe birleşik olacak şekilde girin. Örneğin cevabın İstanbul Fatih olduğunu varsayalım, cevap istanbulfatih şeklinde girilmeli.<br>
+            2. Köpeğim zararsızdır. Onu bul lütfen :(<br>
+            3. Bulduğunda mama vermeyi unutma :/
+        </p>
+        <script>
+            function decryptMessage() {
+                var secretKey = document.getElementById('secretKey').value;
+                secretKey = secretKey+"00"
+                var encryptedMessage = "klg6g+ezYv69aGIHlpFsqMvm/pLelZBsz4lwUnQWz3w=";
+
+                var key = CryptoJS.enc.Utf8.parse(secretKey);
+                var cipherParams = CryptoJS.lib.CipherParams.create({
+                    ciphertext: CryptoJS.enc.Base64.parse(encryptedMessage)
+                });
+                var decrypted = CryptoJS.AES.decrypt(cipherParams, key, { mode: CryptoJS.mode.ECB });
+                var decryptedMessage = decrypted.toString(CryptoJS.enc.Utf8);
+
+                alert(decryptedMessage);
+            }
+        </script>
+    </body>
+</html>
